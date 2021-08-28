@@ -3,5 +3,6 @@ export default {
   secondary: '#171616',
   primaryText: '#f7f7f7',
   secondaryText: '#898989',
-  error: '#FF0000'
+  error: '#FF0000',
+  success: '#04bb3b'
 };
