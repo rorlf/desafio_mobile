@@ -2,13 +2,13 @@ import { StyleSheet } from 'react-native';
 import colors from 'shared/styles/colors';
 
 export default StyleSheet.create({
-  container: {},
   content: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    borderWidth: 1
+    borderWidth: 1,
+    height: 48
   },
   textInput: {
     flex: 1,
@@ -19,8 +19,7 @@ export default StyleSheet.create({
   icon: {
     paddingHorizontal: 10,
     justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%'
+    alignItems: 'center'
   },
   error: {
     fontSize: 15,

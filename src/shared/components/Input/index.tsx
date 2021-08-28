@@ -2,19 +2,22 @@ import React, {
   ForwardedRef,
   forwardRef,
   useImperativeHandle,
-  useRef
+  useRef,
+  useState
 } from 'react';
 import {
   TextInput,
   TextInputProps,
   TextStyle,
+  TouchableOpacity,
   View,
   ViewStyle
 } from 'react-native';
+
+import { Controller, UseFormReturn, get } from 'react-hook-form';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from 'shared/styles/colors';
 import styles from './styles';
-import { Controller, UseFormReturn, get } from 'react-hook-form';
-import { useState } from 'react';
 
 interface Props extends TextInputProps {
   style?: ViewStyle;
@@ -57,7 +60,6 @@ function Input(props: Props, ref: ForwardedRef<any>) {
 
   const textInputRef = useRef<any>();
 
-  const containerStyle = { ...styles.container, ...style };
   const contentStyle = {
     ...styles.content,
     borderColor: errorMessage ? colors.error : colors.secondaryText
@@ -86,32 +88,41 @@ function Input(props: Props, ref: ForwardedRef<any>) {
   }
 
   return (
-    <View style={containerStyle}>
+    <View style={style}>
       <View style={contentStyle}>
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              {...textInputProps}
-              ref={textInputRef}
-              style={styles.textInput}
-              onBlur={onBlur}
-              onChangeText={value => onChange(value)}
-              value={value}
-              placeholder={placeholder}
-              placeholderTextColor={colors.secondaryText}
-              onSubmitEditing={onSubmit}
-              secureTextEntry={!isTextVisible}
-            />
+            <>
+              <TextInput
+                ref={textInputRef}
+                style={styles.textInput}
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                placeholder={placeholder}
+                placeholderTextColor={colors.secondaryText}
+                onSubmitEditing={onSubmit}
+                secureTextEntry={!isTextVisible}
+                autoCapitalize="none"
+                {...textInputProps}
+              />
+              {isSecureText && value?.length > 0 && (
+                <TouchableOpacity
+                  style={styles.icon}
+                  onPress={toggleVisibility}>
+                  <Icon
+                    name={isTextVisible ? 'visibility' : 'visibility-off'}
+                    size={30}
+                    color={colors.secondaryText}
+                  />
+                </TouchableOpacity>
+              )}
+            </>
           )}
           name={formKey}
           rules={rules}
         />
-        {/* {isSecureText && (
-          <TouchableOpacity style={styles.icon} onPress={toggleVisibility}>
-            <Icon name={isTextVisible ? 'eyeOpen' : 'eyeClose'} />
-          </TouchableOpacity>
-        )} */}
       </View>
     </View>
   );
