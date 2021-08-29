@@ -16,8 +16,23 @@ export default StyleSheet.create({
   input: {
     marginTop: 20
   },
-  content: {
+  form: {
     justifyContent: 'center',
     flex: 1
+  },
+  button: {
+    marginTop: 20
+  },
+  registerContainer: {
+    alignSelf: 'center',
+    marginTop: 20,
+    padding: 5,
+    paddingHorizontal: 15
+  },
+  register: {
+    fontSize: 14,
+    color: colors.primaryText,
+    textDecorationLine: 'underline',
+    textAlign: 'center'
   }
 });
