@@ -6,6 +6,7 @@ import Geolocation, {
 import { constants, getData, storeData } from 'data/Storage';
 import { Position, PositionToShowOption } from './types';
 import crashlytics from '@react-native-firebase/crashlytics';
+import { useAuth } from 'contexts/Auth';
 
 // Components
 import { View, PermissionsAndroid, Text } from 'react-native';
@@ -21,6 +22,7 @@ import Button from 'shared/components/Button';
 import { logout } from 'services/AuthenticationService';
 
 export default function HomeScreen() {
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [hasPermission, setHasPermission] = useState(false);
   const [currrentPosition, setCurrrentPosition] = useState<Position>({
@@ -29,7 +31,8 @@ export default function HomeScreen() {
     speed: null
   });
   const [lastAccessPosition, setLastAccessPosition] = useState<Position>();
-
+  const lastAccessPositionStorageKey =
+    constants.LAST_ACCESS_POSITION + user?.uid;
   const [positionToShowOption, setPositionToShowOption] =
     useState<PositionToShowOption>('current');
 
@@ -83,7 +86,7 @@ export default function HomeScreen() {
   }
 
   async function obtainLastAccessPosition() {
-    const lastAccessPosition = await getData(constants.LAST_ACCESS_POSITION);
+    const lastAccessPosition = await getData(lastAccessPositionStorageKey);
 
     if (lastAccessPosition) {
       setLastAccessPosition(lastAccessPosition);
@@ -96,7 +99,7 @@ export default function HomeScreen() {
       ...position.coords,
       speed: null
     };
-    storeData(constants.LAST_ACCESS_POSITION, positionWithouSpeed);
+    storeData(lastAccessPositionStorageKey, positionWithouSpeed);
   }
 
   function onErrorWatchPosition(error: GeoError) {
