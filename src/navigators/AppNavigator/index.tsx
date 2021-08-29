@@ -9,10 +9,10 @@ import { RootStackParamList } from './types';
 import LoginScreen from 'screens/LoginScreen';
 import RegisterScreen from 'screens/RegisterScreen';
 import LoadingScreen from 'screens/LoadingScreen';
+import HomeScreen from 'screens/HomeScreen';
 
 // Context
 import { useAuth } from 'contexts/Auth';
-import HomeScreen from 'screens/HomeScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
