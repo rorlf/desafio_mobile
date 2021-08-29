@@ -17,6 +17,14 @@ export async function register(email: string, password: string) {
   }
 }
 
+export async function logout() {
+  try {
+    await auth().signOut();
+  } catch (error) {
+    handleAuthErrors(error, 'Erro ao tentar fazer logout');
+  }
+}
+
 function handleAuthErrors(error: any, defaultMesage: string) {
   if (error.code === 'auth/email-already-in-use') {
     showError('Email já está em uso');
