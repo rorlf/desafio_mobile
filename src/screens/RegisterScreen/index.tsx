@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'navigators/AppNavigator/types';
 import { useForm } from 'react-hook-form';
+import analytics from '@react-native-firebase/analytics';
 
 // Components
 import Button from 'shared/components/Button';
@@ -35,6 +36,11 @@ export default function RegisterScreen() {
   async function onSubmit(formData: FormData) {
     setIsLoading(true);
     await register(formData.email, formData.password);
+    await analytics().logEvent('registration', {
+      email: formData.email,
+      method: 'email',
+      date: new Date().toISOString()
+    });
     setIsLoading(false);
   }
 

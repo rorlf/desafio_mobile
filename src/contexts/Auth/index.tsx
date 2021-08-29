@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
+import analytics from '@react-native-firebase/analytics';
 
 type User = FirebaseAuthTypes.User | null;
 
@@ -43,11 +44,10 @@ export function AuthProvider({ children }) {
   async function onAuthStateChanged(user: User) {
     if (user) {
       await crashlytics().setUserId(user.uid);
+      await analytics().setUserId(user.uid);
     }
     setUser(user);
-    if (isInitializing) {
-      setIsInitializing(false);
-    }
+    setIsInitializing(false);
   }
 
   return (

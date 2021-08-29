@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from 'navigators/AppNavigator/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useForm } from 'react-hook-form';
+import analytics from '@react-native-firebase/analytics';
 
 // Components
 import Button from 'shared/components/Button';
@@ -35,6 +36,11 @@ export default function LoginScreen() {
   async function onSubmit(formData: FormData) {
     setIsLoading(true);
     await login(formData.email, formData.password);
+    await analytics().logEvent('loginInApp', {
+      email: formData.email,
+      method: 'email',
+      date: new Date().toISOString()
+    });
     setIsLoading(false);
   }
 
