@@ -42,12 +42,12 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function onAuthStateChanged(user: User) {
-    if (user) {
-      await crashlytics().setUserId(user.uid);
-      await analytics().setUserId(user.uid);
-    }
     setUser(user);
     setIsInitializing(false);
+    if (user) {
+      crashlytics().setUserId(user.uid);
+      analytics().setUserId(user.uid);
+    }
   }
 
   return (
