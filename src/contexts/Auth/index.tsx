@@ -6,6 +6,7 @@ import React, {
   useContext
 } from 'react';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 type User = FirebaseAuthTypes.User | null;
 
@@ -39,7 +40,10 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  function onAuthStateChanged(user: User) {
+  async function onAuthStateChanged(user: User) {
+    if (user) {
+      await crashlytics().setUserId(user.uid);
+    }
     setUser(user);
     if (isInitializing) {
       setIsInitializing(false);

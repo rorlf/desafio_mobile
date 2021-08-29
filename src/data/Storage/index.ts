@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 function convertItemToData(item) {
   const data = JSON.parse(item);
@@ -14,7 +15,9 @@ async function storeData(key, data) {
   try {
     const item = convertDataToItem(data);
     await AsyncStorage.setItem(key, item);
-  } catch (e) {}
+  } catch (e) {
+    crashlytics().recordError(e);
+  }
 }
 
 async function getData(key) {
@@ -26,6 +29,7 @@ async function getData(key) {
     }
     return null;
   } catch (e) {
+    crashlytics().recordError(e);
     return null;
   }
 }

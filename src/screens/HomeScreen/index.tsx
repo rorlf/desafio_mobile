@@ -5,6 +5,7 @@ import Geolocation, {
 } from 'react-native-geolocation-service';
 import { constants, getData, storeData } from 'data/Storage';
 import { Position, PositionToShowOption } from './types';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 // Components
 import { View, PermissionsAndroid, Text } from 'react-native';
@@ -99,7 +100,7 @@ export default function HomeScreen() {
   }
 
   function onErrorWatchPosition(error: GeoError) {
-    console.log(error);
+    crashlytics().recordError(new Error(error.message));
   }
 
   function onPressPositionOptionToShow(option: PositionToShowOption) {
