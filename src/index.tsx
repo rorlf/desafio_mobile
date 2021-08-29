@@ -6,13 +6,14 @@ import { enableScreens } from 'react-native-screens';
 import AppNavigator from 'navigators/AppNavigator';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from 'contexts/Auth';
+import { navigationRef, onStateChange } from 'services/NavigationService';
 enableScreens();
 
 export default function App() {
   return (
     <AuthProvider>
       <RootSiblingParent>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef} onStateChange={onStateChange}>
           <SafeAreaView style={{ flex: 1 }}>
             <AppNavigator />
           </SafeAreaView>
