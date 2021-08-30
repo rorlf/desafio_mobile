@@ -10,7 +10,7 @@ import { useAuth } from 'contexts/Auth';
 
 // Components
 import { View, PermissionsAndroid, Text } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LoadingScreen from 'screens/LoadingScreen';
 
@@ -20,6 +20,8 @@ import Button from 'shared/components/Button';
 
 // Services
 import { logout } from 'services/AuthenticationService';
+import Map from 'shared/components/Map';
+import colors from 'shared/styles/colors';
 
 export default function HomeScreen() {
   const { user } = useAuth();
@@ -138,7 +140,7 @@ export default function HomeScreen() {
           )}
         </View>
         <View style={styles.content}>
-          <MapView
+          <Map
             region={{
               latitude: positionToShow.latitude,
               longitude: positionToShow.longitude,
@@ -151,9 +153,9 @@ export default function HomeScreen() {
                 latitude: positionToShow.latitude,
                 longitude: positionToShow.longitude
               }}>
-              <Icon name={markerIcon} size={30} />
+              <Icon name={markerIcon} size={30} color={colors.primaryText} />
             </Marker>
-          </MapView>
+          </Map>
         </View>
         <Button label="SAIR" style={styles.button} onPress={onPressLogout} />
       </View>
